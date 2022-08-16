@@ -5,13 +5,13 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 const DashFooter = () => {
   const navigate = useNavigate();
-  const { pathName } = useLocation();
+  const { pathname } = useLocation();
 
   const onGoHomeClicked = () => navigate("/dash");
 
   let goHomeButton = null;
 
-  if (pathName !== "/dash") {
+  if (pathname !== "/dash") {
     goHomeButton = (
       <button
         className="dash-footer__button icon-button"
