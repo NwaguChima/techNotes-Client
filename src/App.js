@@ -23,7 +23,7 @@ function App() {
             <Route index element={<UsersList />} />
           </Route>
         </Route>{" "}
-        {/* end dash */}
+        {/* end dash routing section */}
       </Route>
     </Routes>
   );
