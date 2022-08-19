@@ -1,4 +1,8 @@
-import { createSelectore, createEntityAdapter } from "@reduxjs/toolkit";
+import {
+  createSelectore,
+  createEntityAdapter,
+  createSelector,
+} from "@reduxjs/toolkit";
 import { apiSlice } from "../../app/api/apiSlice";
 
 const usersAdapter = createEntityAdapter({});
@@ -31,3 +35,24 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     }),
   }),
 });
+
+export const { useGetUsersQuery } = usersApiSlice;
+
+// returns the query result object
+export const selectUsersResult = usersApiSlice.endpoints.getUsers.select();
+
+// creates memoized selector
+const selectUsersData = createSelector(
+  selectUsersResult,
+  (usersResult) => usersResult.data // normalized state object with ids & entities
+);
+
+//getSelectors creates these selectors and we rename them with aliases using destructuring
+export const {
+  selectAll: selectAllUsers,
+  selectById: selectUserById,
+  selectIds: selectUserIds,
+  // Pass in a selector that returns the users slice of state
+} = usersAdapter.getSelectors(
+  (state) => selectUsersData(state) ?? initialState
+);
