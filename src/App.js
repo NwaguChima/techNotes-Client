@@ -13,7 +13,7 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<Public />} />
         <Route path="login" element={<Login />} />
-        {/* dash */}
+        {/* dash routing section */}
         <Route path="dash" element={<DashLayout />}>
           <Route index element={<Welcome />} />
           <Route path="notes">
@@ -23,7 +23,7 @@ function App() {
             <Route index element={<UsersList />} />
           </Route>
         </Route>{" "}
-        {/* end dash */}
+        {/* end dash routing section */}
       </Route>
     </Routes>
   );
