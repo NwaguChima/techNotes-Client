@@ -8,8 +8,8 @@ const Prefetch = () => {
   useEffect(() => {
     console.log("subscribing...");
 
-    const notes = store.dispatch(notesApiSlice.actions.getNotes.initiate());
-    const users = store.dispatch(usersApiSlice.actions.getUsers.initiate());
+    const notes = store.dispatch(notesApiSlice.endpoints.getNotes.initiate());
+    const users = store.dispatch(usersApiSlice.endpoints.getUsers.initiate());
 
     return () => {
       console.log("unsubscribing...");
