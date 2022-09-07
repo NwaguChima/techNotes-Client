@@ -55,13 +55,28 @@ const NewUserForm = () => {
   const onSaveUserClicked = async (e) => {
     e.preventDefault();
     if (canSave) {
-      const { data } = await addNewUser({
+      await addNewUser({
         username,
         password,
         roles,
       });
     }
   };
+
+  const options = Object.values(ROLES).map((role) => {
+    return (
+      <option key={role} value={role}>
+        {role}
+      </option>
+    );
+  });
+
+  const errClass = isError ? "errmsg" : "offscreen";
+  const validUserClass = !validUsername ? "form__input--incomplete" : "";
+  const valiePwdClass = !validPassword ? "form__input--incomplete" : "";
+  const validRolesClass = !Boolean(roles.length)
+    ? "form__input--incomplete"
+    : "";
 
   return <div>NewUserForm</div>;
 };
