@@ -78,6 +78,24 @@ const EditUserForm = ({ user }) => {
     );
   });
 
+  let canSave;
+  if (password) {
+    canSave =
+      [roles.length, validUsername, validPassword].every(Boolean) && !isLoading;
+  } else {
+    canSave = [roles.length, validUsername].every(Boolean) && !isLoading;
+  }
+
+  const errClass = isError || isDelError ? "errmsg" : "offscreen";
+  const validUserClass = !validUsername ? "form__input--incomplete" : "";
+  const validPwdClass =
+    password && !validPassword ? "form__input--incomplete" : "";
+  const validRolesClass = !Boolean(roles.length)
+    ? "form__input--incomplete"
+    : "";
+
+  const errContent = (error?.data?.message || delerror?.data?.message) ?? "";
+
   return <div>EditUserForm</div>;
 };
 
