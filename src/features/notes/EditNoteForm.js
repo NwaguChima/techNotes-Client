@@ -46,6 +46,38 @@ const EditNoteForm = ({ note, users }) => {
     await deleteNote({ id: note.id });
   };
 
+  const created = new Date(note.createdAt).toLocaleString("en-US", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+  });
+  const updated = new Date(note.updatedAt).toLocaleString("en-US", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+  });
+
+  const options = users.map((user) => {
+    return (
+      <option key={user.id} value={user.id}>
+        {" "}
+        {user.username}
+      </option>
+    );
+  });
+
+  const errClass = isError || isDelError ? "errmsg" : "offscreen";
+  const validTitleClass = !title ? "form__input--incomplete" : "";
+  const validTextClass = !text ? "form__input--incomplete" : "";
+
+  const errContent = (error?.data?.message || delerror?.data?.message) ?? "";
+
   return <div>EditNoteForm</div>;
 };
 
