@@ -22,6 +22,32 @@ const NewNoteForm = ({ users }) => {
       navigate("/dash/notes");
     }
   }, [isSuccess, navigate]);
+
+  const onTitleChanged = (e) => setTitle(e.target.value);
+  const onTextChanged = (e) => setText(e.target.value);
+  const onUserIdChanged = (e) => setUserId(e.target.value);
+
+  const canSave = [title, text, userId].every(Boolean) && !isLoading;
+
+  const onSaveNoteClicked = async (e) => {
+    e.preventDefault();
+    if (canSave) {
+      await addNewNote({ user: userId, title, text });
+    }
+  };
+
+  const options = users.map((user) => {
+    return (
+      <option key={user.id} value={user.id}>
+        {" "}
+        {user.username}
+      </option>
+    );
+  });
+
+  const errClass = isError ? "errmsg" : "offscreen";
+  const validTitleClass = !title ? "form__input--incomplete" : "";
+  const validTextClass = !text ? "form__input--incomplete" : "";
   return <div>NewNoteForm</div>;
 };
 
