@@ -19,6 +19,33 @@ const EditNoteForm = ({ note, users }) => {
   const [text, setText] = useState(note.text);
   const [completed, setCompleted] = useState(note.completed);
   const [userId, setUserId] = useState(note.user);
+
+  useEffect(() => {
+    if (isSuccess || isDelSuccess) {
+      setTitle("");
+      setText("");
+      setUserId("");
+      navigate("/dash/notes");
+    }
+  }, [isSuccess, isDelSuccess, navigate]);
+
+  const onTitleChanged = (e) => setTitle(e.target.value);
+  const onTextChanged = (e) => setText(e.target.value);
+  const onCompletedChanged = (e) => setCompleted((prev) => !prev);
+  const onUserIdChanged = (e) => setUserId(e.target.value);
+
+  const canSave = [title, text, userId].every(Boolean) && !isLoading;
+
+  const onSaveNoteClicked = async (e) => {
+    if (canSave) {
+      await updateNote({ id: note.id, user: userId, title, text, completed });
+    }
+  };
+
+  const onDeleteNoteClicked = async () => {
+    await deleteNote({ id: note.id });
+  };
+
   return <div>EditNoteForm</div>;
 };
 
