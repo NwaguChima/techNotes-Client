@@ -26,6 +26,24 @@ const EditUserForm = ({ user }) => {
   const [roles, setRoles] = useState(user.roles);
   const [active, setActive] = useState(user.active);
 
+  useEffect(() => {
+    setValidUsername(USER_REGEX.test(username));
+  }, [username]);
+
+  useEffect(() => {
+    setValidPassword(PWD_REGEX.test(password));
+  }, [password]);
+
+  useEffect(() => {
+    console.log(isSuccess);
+    if (isSuccess || isDelSuccess) {
+      setUsername("");
+      setPassword("");
+      setRoles([]);
+      navigate("/dash/users");
+    }
+  }, [isSuccess, isDelSuccess, navigate]);
+
   return <div>EditUserForm</div>;
 };
 
