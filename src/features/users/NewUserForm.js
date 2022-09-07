@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useAddNewUserMutation } from "./usersApiSlice";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,7 +6,7 @@ import { faSave } from "@fortawesome/free-solid-svg-icons";
 import { ROLES } from "../../config/roles";
 
 const USER_REGEX = /^[A-z]{3,20}$/;
-const PASSWORD_REGEX = /^[A-z0-9!@#$%]{4,12}$/;
+const PWD_REGEX = /^[A-z0-9!@#$%]{4,12}$/;
 
 const NewUserForm = () => {
   const [addNewUser, { isLoading, isSuccess, isError, error }] =
@@ -25,7 +25,7 @@ const NewUserForm = () => {
   }, [username]);
 
   useEffect(() => {
-    setValidPassword(PASSWORD_REGEX.test(password));
+    setValidPassword(PWD_REGEX.test(password));
   }, [password]);
 
   useEffect(() => {
@@ -41,12 +41,11 @@ const NewUserForm = () => {
   const onPasswordChanged = (e) => setPassword(e.target.value);
 
   const onRolesChanged = (e) => {
-    const { value } = Array.from(
-      e.target.selectedOptions,
+    const values = Array.from(
+      e.target.selectedOptions, //HTMLCollection
       (option) => option.value
     );
-
-    setRoles(value);
+    setRoles(values);
   };
 
   const canSave =
@@ -55,17 +54,14 @@ const NewUserForm = () => {
   const onSaveUserClicked = async (e) => {
     e.preventDefault();
     if (canSave) {
-      await addNewUser({
-        username,
-        password,
-        roles,
-      });
+      await addNewUser({ username, password, roles });
     }
   };
 
   const options = Object.values(ROLES).map((role) => {
     return (
       <option key={role} value={role}>
+        {" "}
         {role}
       </option>
     );
@@ -136,5 +132,4 @@ const NewUserForm = () => {
 
   return content;
 };
-
 export default NewUserForm;
