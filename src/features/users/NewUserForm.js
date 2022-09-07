@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAddNewUserMutation } from "./usersApiSlice";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,6 +9,17 @@ const USER_REGEX = /^[A-z]{3,20}$/;
 const PASSWORD_REGEX = /^[A-z0-9!@#$%]{4,12}$/;
 
 const NewUserForm = () => {
+  const [addNewUser, { isLoading, isSuccess, isError, error }] =
+    useAddNewUserMutation();
+
+  const navigate = useNavigate();
+
+  const [username, setUsername] = useState("");
+  const [validUsername, setValidUsername] = useState(false);
+  const [password, setPassword] = useState("");
+  const [validPassword, setValidPassword] = useState(false);
+  const [roles, setRoles] = useState(["Employee"]);
+
   return <div>NewUserForm</div>;
 };
 
