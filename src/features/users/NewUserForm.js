@@ -37,6 +37,32 @@ const NewUserForm = () => {
     }
   }, [isSuccess, navigate]);
 
+  const onUsernameChanged = (e) => setUsername(e.target.value);
+  const onPasswordChanged = (e) => setPassword(e.target.value);
+
+  const onRolesChanged = (e) => {
+    const { value } = Array.from(
+      e.target.selectedOptions,
+      (option) => option.value
+    );
+
+    setRoles(value);
+  };
+
+  const canSave =
+    [roles.length, validUsername, validPassword].every(Boolean) && !isLoading;
+
+  const onSaveUserClicked = async (e) => {
+    e.preventDefault();
+    if (canSave) {
+      const { data } = await addNewUser({
+        username,
+        password,
+        roles,
+      });
+    }
+  };
+
   return <div>NewUserForm</div>;
 };
 
