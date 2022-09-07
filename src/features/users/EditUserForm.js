@@ -44,6 +44,40 @@ const EditUserForm = ({ user }) => {
     }
   }, [isSuccess, isDelSuccess, navigate]);
 
+  const onUsernameChanged = (e) => setUsername(e.target.value);
+  const onPasswordChanged = (e) => setPassword(e.target.value);
+
+  const onRolesChanged = (e) => {
+    const values = Array.from(
+      e.target.selectedOptions,
+      (option) => option.value
+    );
+    setRoles(values);
+  };
+
+  const onActiveChanged = () => setActive((prev) => !prev);
+
+  const onSaveUserClicked = async (e) => {
+    if (password) {
+      await updateUser({ id: user.id, username, password, roles, active });
+    } else {
+      await updateUser({ id: user.id, username, roles, active });
+    }
+  };
+
+  const onDeleteUserClicked = async () => {
+    await deleteUser({ id: user.id });
+  };
+
+  const options = Object.values(ROLES).map((role) => {
+    return (
+      <option key={role} value={role}>
+        {" "}
+        {role}
+      </option>
+    );
+  });
+
   return <div>EditUserForm</div>;
 };
 
