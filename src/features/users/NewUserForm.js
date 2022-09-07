@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAddNewUserMutation } from "./usersApiSlice";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,6 +19,23 @@ const NewUserForm = () => {
   const [password, setPassword] = useState("");
   const [validPassword, setValidPassword] = useState(false);
   const [roles, setRoles] = useState(["Employee"]);
+
+  useEffect(() => {
+    setValidUsername(USER_REGEX.test(username));
+  }, [username]);
+
+  useEffect(() => {
+    setValidPassword(PASSWORD_REGEX.test(password));
+  }, [password]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      setUsername("");
+      setPassword("");
+      setRoles([]);
+      navigate("/dash/users");
+    }
+  }, [isSuccess, navigate]);
 
   return <div>NewUserForm</div>;
 };
