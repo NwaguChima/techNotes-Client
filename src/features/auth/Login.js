@@ -7,7 +7,24 @@ import { setCredentials } from "./authSlice";
 import { useLoginMutation } from "./authApiSlice";
 
 const Login = () => {
-  return <h1>Login</h1>;
+  const userRef = useRef();
+  const errRef = useRef();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [errMsg, setErrMsg] = useState("");
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [login, { isLoading }] = useLoginMutation();
+
+  const errClass = errMsg ? "errmsg" : "offscreen";
+
+  if (isLoading) return <p>Loading...</p>;
+
+  const content = ()
+
+  return content ;
 };
 
 export default Login;
