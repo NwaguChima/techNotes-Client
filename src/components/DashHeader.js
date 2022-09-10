@@ -38,10 +38,6 @@ const DashHeader = () => {
 
   const onLogoutClicked = () => sendLogout();
 
-  if (isLoading) return <p>Logging Out...</p>;
-
-  if (isError) return <p>Error: {error.data?.message}</p>;
-
   let dashClass = null;
   if (
     !DASH_REGEX.test(pathname) &&
