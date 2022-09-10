@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFileCirclePlus,
@@ -7,14 +7,15 @@ import {
   faUserPlus,
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 
 import { useSendLogoutMutation } from "../features/auth/authApiSlice";
+
 import useAuth from "../hooks/useAuth";
 
 const DASH_REGEX = /^\/dash(\/)?$/;
 const NOTES_REGEX = /^\/dash\/notes(\/)?$/;
-const USERS_REGEX = /^\/dash\/user(\/)?$/;
+const USERS_REGEX = /^\/dash\/users(\/)?$/;
 
 const DashHeader = () => {
   const { isManager, isAdmin } = useAuth();
@@ -26,9 +27,7 @@ const DashHeader = () => {
     useSendLogoutMutation();
 
   useEffect(() => {
-    if (isSuccess) {
-      navigate("/");
-    }
+    if (isSuccess) navigate("/");
   }, [isSuccess, navigate]);
 
   const onNewNoteClicked = () => navigate("/dash/notes/new");
@@ -36,15 +35,13 @@ const DashHeader = () => {
   const onNotesClicked = () => navigate("/dash/notes");
   const onUsersClicked = () => navigate("/dash/users");
 
-  const onLogoutClicked = () => sendLogout();
-
   let dashClass = null;
   if (
     !DASH_REGEX.test(pathname) &&
     !NOTES_REGEX.test(pathname) &&
     !USERS_REGEX.test(pathname)
   ) {
-    dashClass = "dash-container--small";
+    dashClass = "dash-header__container--small";
   }
 
   let newNoteButton = null;
@@ -94,7 +91,7 @@ const DashHeader = () => {
   }
 
   const logoutButton = (
-    <button className="icon-button" title="logout" onClick={onLogoutClicked}>
+    <button className="icon-button" title="Logout" onClick={sendLogout}>
       <FontAwesomeIcon icon={faRightFromBracket} />
     </button>
   );
@@ -119,6 +116,7 @@ const DashHeader = () => {
   const content = (
     <>
       <p className={errClass}>{error?.data?.message}</p>
+
       <header className="dash-header">
         <div className={`dash-header__container ${dashClass}`}>
           <Link to="/dash">
@@ -132,5 +130,4 @@ const DashHeader = () => {
 
   return content;
 };
-
 export default DashHeader;
