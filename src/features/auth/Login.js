@@ -1,4 +1,3 @@
-import React from "react";
 import { useRef, useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
@@ -13,8 +12,8 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [login, { isLoading }] = useLoginMutation();
 
@@ -28,14 +27,9 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const { accessToken } = await login({
-        username,
-        password,
-      }).unwrap();
-
-      dispatch(setCredentials(accessToken));
+      const { accessToken } = await login({ username, password }).unwrap();
+      dispatch(setCredentials({ accessToken }));
       setUsername("");
       setPassword("");
       navigate("/dash");
@@ -49,7 +43,6 @@ const Login = () => {
       } else {
         setErrMsg(err.data?.message);
       }
-
       errRef.current.focus();
     }
   };
@@ -70,6 +63,7 @@ const Login = () => {
         <p ref={errRef} className={errClass} aria-live="assertive">
           {errMsg}
         </p>
+
         <form className="form" onSubmit={handleSubmit}>
           <label htmlFor="username">Username:</label>
           <input
@@ -92,7 +86,7 @@ const Login = () => {
             value={password}
             required
           />
-          <button className="form__input">Sign In</button>
+          <button className="form__submit-button">Sign In</button>
         </form>
       </main>
       <footer>
@@ -103,5 +97,4 @@ const Login = () => {
 
   return content;
 };
-
 export default Login;
