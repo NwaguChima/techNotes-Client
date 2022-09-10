@@ -103,18 +103,35 @@ const DashHeader = () => {
     </button>
   );
 
+  const errClass = isError ? "errmsg" : "offscreen";
+
+  let buttonContent;
+  if (isLoading) {
+    buttonContent = <p>Logging Out...</p>;
+  } else {
+    buttonContent = (
+      <>
+        {newNoteButton}
+        {newUserButton}
+        {notesButton}
+        {userButton}
+        {logoutButton}
+      </>
+    );
+  }
+
   const content = (
-    <header className="dash-header">
-      <div className={`dash-header__container ${dashClass}`}>
-        <Link to="/dash">
-          <h1 className="dash-header__title">techNotes</h1>
-        </Link>
-        <nav className="dash-header__nav">
-          {/* {add more buttons later} */}
-          {logoutButton}
-        </nav>
-      </div>
-    </header>
+    <>
+      <p className={errClass}>{error?.data?.message}</p>
+      <header className="dash-header">
+        <div className={`dash-header__container ${dashClass}`}>
+          <Link to="/dash">
+            <h1 className="dash-header__title">techNotes</h1>
+          </Link>
+          <nav className="dash-header__nav">{buttonContent}</nav>
+        </div>
+      </header>
+    </>
   );
 
   return content;
