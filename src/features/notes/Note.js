@@ -1,13 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import { memo } from "react";
 import { useGetNotesQuery } from "./notesApiSlice";
+import { memo } from "react";
 
 const Note = ({ noteId }) => {
   const { note } = useGetNotesQuery("notesList", {
     selectFromResult: ({ data }) => ({
-      note: data?.entites[noteId],
+      note: data?.entities[noteId],
     }),
   });
 

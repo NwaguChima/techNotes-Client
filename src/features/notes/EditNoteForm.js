@@ -82,7 +82,7 @@ const EditNoteForm = ({ note, users }) => {
   const errContent = (error?.data?.message || delerror?.data?.message) ?? "";
 
   let deleteButton = null;
-  if (isAdmin || isManager) {
+  if (isManager || isAdmin) {
     deleteButton = (
       <button
         className="icon-button"
@@ -94,13 +94,14 @@ const EditNoteForm = ({ note, users }) => {
     );
   }
 
+  console.log("note", note);
   const content = (
     <>
       <p className={errClass}>{errContent}</p>
 
       <form className="form" onSubmit={(e) => e.preventDefault()}>
         <div className="form__title-row">
-          <h2>Edit Note #{note.ticket}</h2>
+          <h2>Edit Note #{note.noteId}</h2>
           <div className="form__action-buttons">
             <button
               className="icon-button"

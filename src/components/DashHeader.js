@@ -8,6 +8,7 @@ import {
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, Link, useLocation } from "react-router-dom";
+import PulseLoader from "react-spinners/PulseLoader";
 
 import { useSendLogoutMutation } from "../features/auth/authApiSlice";
 
@@ -100,7 +101,7 @@ const DashHeader = () => {
 
   let buttonContent;
   if (isLoading) {
-    buttonContent = <p>Logging Out...</p>;
+    buttonContent = <PulseLoader color="#fff" />;
   } else {
     buttonContent = (
       <>
